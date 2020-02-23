@@ -1,0 +1,31 @@
+%h1 Available Tuitions
+
+= link_to 'Create Tuition', new_tuition_path
+
+
+%table.table
+  %thead
+    %tr
+      %th Title
+      %th Description
+      %th Meeting link
+      %th Teacher
+      %th Start at
+      %th End at
+      %th
+      %th
+      %th
+
+  %tbody
+    - @tuitions.each do |tuition|
+      %tr
+        %td= tuition.title
+        %td= tuition.description
+        %td= tuition.meeting_link
+        %td= tuition.user_id
+        %td= tuition.start_at
+        %td= tuition.end_at
+        %td= link_to 'Show', tuition
+        %td= link_to 'Edit', edit_tuition_path(tuition)
+        %td= link_to 'Destroy', tuition, method: :delete, data: { confirm: 'Are you sure?' }
+

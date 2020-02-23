@@ -1,0 +1,29 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @tuition.title
+%p
+  %b Description:
+  = @tuition.description
+%p
+  %b Meeting link:
+  = @tuition.meeting_link
+%p
+  %b Teacher:
+  = @tuition.user_id
+%p
+  %b Start at:
+  = @tuition.start_at
+%p
+  %b End at:
+  = @tuition.end_at
+
+= link_to 'Edit', edit_tuition_path(@tuition)
+\|
+= link_to 'Back', tuitions_path
+
+
+%h4 Particiapte in tuition
+- User.all.each do |user|
+  %input{type: :checkbox, name: "asfd"}= user.name
