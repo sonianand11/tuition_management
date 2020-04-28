@@ -4,14 +4,19 @@ class Tuition < ApplicationRecord
   has_many :tuition_users
   belongs_to :teacher,foreign_key: :user_id, class_name: "User"
 
-  after_create :notify_on_slack
+  # after_create :notify_on_slack
 
   validates_presence_of :title, :description, :user_id
 
-  def notify_on_slack
-    slack_client = SlackBotService.new
-    slack_client.deliver(build_slack_message)
+  # def notify_on_slack
+  #   slack_client = SlackBotService.new
+  #   slack_client.deliver(build_slack_message)
+  # end
+
+  def students
+    tuition_users.map(&:user)
   end
+
 
   def build_slack_message
     teacher = self.teacher

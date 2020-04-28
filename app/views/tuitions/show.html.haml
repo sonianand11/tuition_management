@@ -23,7 +23,7 @@
 \|
 = link_to 'Back', tuitions_path
 
-
-%h4 Particiapte in tuition
-- User.all.each do |user|
-  %input{type: :checkbox, name: "asfd"}= user.name
+- if @tuition.students.any?
+  %h4 Particiapte in tuition
+  - @tuition.students.each do |user|
+    %input{type: :checkbox, name: "asfd"}= user.name

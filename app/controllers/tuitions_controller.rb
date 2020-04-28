@@ -16,10 +16,13 @@ class TuitionsController < ApplicationController
   # GET /tuitions/new
   def new
     @tuition = Tuition.new
+    @all_users = User.all
+    @students = @tuition.students
   end
 
   # GET /tuitions/1/edit
   def edit
+    @students = @tuition.students
   end
 
   # POST /tuitions
@@ -29,6 +32,11 @@ class TuitionsController < ApplicationController
     @tuition.user_id = current_user.id
     respond_to do |format|
       if @tuition.save
+        if params[:tuition_users].present?
+          params[:tuition_users].each do |user_id|
+            TuitionUser.find_or_create_by(tuition_id: @tuition.id, user_id: user_id)
+          end
+        end
         format.html { redirect_to @tuition, notice: 'Tuition was successfully created.' }
         format.json { render :show, status: :created, location: @tuition }
       else
@@ -43,6 +51,13 @@ class TuitionsController < ApplicationController
   def update
     respond_to do |format|
       if @tuition.update(tuition_params)
+        if params[:tuition_users].present?
+          @tuition.tuition_users.destroy_all
+          params[:tuition_users].each do |user_id|
+
+            TuitionUser.find_or_create_by(tuition_id: @tuition.id, user_id: user_id)
+          end
+        end
         format.html { redirect_to @tuition, notice: 'Tuition was successfully updated.' }
         format.json { render :show, status: :ok, location: @tuition }
       else

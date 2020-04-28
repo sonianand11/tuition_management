@@ -1,4 +1,6 @@
-= form_for @tuition do |f|
+%script{src: "http://malsup.github.io/min/jquery.form.min.js"}
+
+= form_for(@tuition, html: {id: "tuition_form", onsubmit: "return submitTutionForm(this)"} ) do |f|
   - if @tuition.errors.any?
     #error_explanation
       %h2= "#{pluralize(@tuition.errors.count, "error")} prohibited this tuition from being saved:"
@@ -22,10 +24,27 @@
     = f.label :end_at
     = f.datetime_select :end_at, class: "form-control"
   .form-group
-    %select{}
+    - User.all.each do |user|
+      %input{type: "checkbox",name: "tuition_users[]",value: user.id, checked: @students.include?(user)}= user.name
+    
 
   .form-group
     = f.submit 'Save'
     
 
 
+:javascript
+  function submitTutionForm(element){
+    $(element).ajaxSubmit(
+      {
+        success: function(res) { 
+            alert("Successfully created tution!");
+            window.location = "/" 
+        },
+        error: function(res){
+          alert("Error saving data.")
+        }
+      }); 
+    return false;
+  }
+  
