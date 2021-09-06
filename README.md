@@ -1,24 +1,6 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+A simple tution management system
+# Steps to install
+- Download the project
+- bundle install
+- rake db:create db:migrate db:seed
+- Configure the SLACK_WEBHOOK_CHANNEL and SLACK_WEBHOOK_URL in development.rb to get the notification on slack
